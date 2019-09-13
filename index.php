@@ -33,41 +33,55 @@ $forUsers = $forUser->myArray();
             </tr>
         </thead>
         <tbody id ="Tbody">
-            <?php foreach ($forUsers as $list) { ?>
-            <tr>
-            <th scope="row"><?php echo $list['Name'].' '.$list['Firstname'];?></th>
-            <th name="date"><?php echo $list['birth_date'];?></th>
-            <th name="adress"><?php echo $list['Adress'];?></th>
-            <th name="number"><?php echo $list['Phone_Number'];?></th>
-            <th name="service"><?php echo $list['Service'];?></th>
-            </tr>
-            <?php } ?>
         </tbody>
         </table>
     </table>
-    <!-- <script>
+    <script>
         let users = [
-            <?php foreach ($forUsers as $list)
-            { name: "", lastName: "", date: , address: , number: , service: },
-            ?>
+            <?php foreach ($forUsers as $list) { ?>
+            { name: "<?php echo $list['Name'].' '.$list['Firstname'];?>", date: "<?php echo $list['birth_date'];?>",
+                address: "<?php echo $list['Adress'];?>",
+                number: "<?php echo $list['Phone_Number'];?>",
+                service: "<?php echo $list['Service'];?>"
+            },
+            <?php } ?>
+            
             ];
-        function myfunction(){
-            var selectElmt = document.getElementById("listClass");
-            var selectTbody = document.getElementById("Tbody");
-            var selectServcie = document.getElementById("Service");
-            var valeurSelectionnee = selectElmt.options[selectElmt.selectedIndex].value;
-            var textselectionne = selectElmt.options[selectElmt.selectedIndex].text;
-            var list = <?php echo json_encode($forUsers);?>;
+
+        let html = users.map(user =>
+            `<tr>
+            <th scope="row">${user.name}</th>
+                <th name="date">${user.date}</th>
+                <th name="adress">${user.address}</th>
+                <th name="number">${user.number}</th>
+                <th name="service">${user.service}</th>
+            </tr>
+            `).reduce((res, next) => res += next);
+
+        let tbody = document.getElementById("Tbody");
+
+        tbody.insertAdjacentHTML('afterbegin', html)
 
 
-            if (valeurSelectionnee === "123"){
-                console.log(list)
-                //document.getElementById("Service").innerHTML = valeurSelectionnee;
-            }
-
-            document.getElementById("Service").innerHTML = valeurSelectionnee;
-        }
-    </script> -->
+        document.getElementById("listClass").addEventListener("change", evt => 
+        {
+            let select = evt.target;
+            let option = select.options[select.selectedIndex].text;
+            
+            let html = users
+                .filter(user =>  option == "Service" ? true : user.service == option)
+                .map(user =>
+                `<tr><th scope="row">${user.name}</th>
+                    <th name="date">${user.date}</th>
+                    <th name="adress">${user.address}</th>
+                    <th name="number">${user.number}</th>
+                    <th name="service">${user.service}</th>
+                </tr>
+                `).reduce((res, next) => res += next);
+            
+            tbody.innerHTML = html;
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
