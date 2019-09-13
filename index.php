@@ -18,12 +18,12 @@ $forUsers = $forUser->myArray();
     <table class="table">
         <thead class="thead-dark">
             <tr>
-            <th scope="col">Name et First</th>
+            <th scope="col">Name et Firstname</th>
             <th scope="col">Age</th>
             <th scope="col">Adress</th>
             <th scope="col">Phone number</th>
             <th scope="col">
-                <select id="listClass" onchange="myfunction()" value="Service">
+                <select id="listClass" value="Service">
                     <option value="Service" selected>Service</option>
                     <option value="123">123</option>
                     <option value="300">300</option>
@@ -37,6 +37,7 @@ $forUsers = $forUser->myArray();
         </table>
     </table>
     <script>
+        // arrray users for my Tbody (my little interface)
         let users = [
             <?php foreach ($forUsers as $list) { ?>
             { name: "<?php echo $list['Name'].' '.$list['Firstname'];?>", date: "<?php echo $list['birth_date'];?>",
@@ -47,7 +48,7 @@ $forUsers = $forUser->myArray();
             <?php } ?>
             
             ];
-
+        // use my users array for insert to my html content
         let html = users.map(user =>
             `<tr>
             <th scope="row">${user.name}</th>
@@ -62,7 +63,7 @@ $forUsers = $forUser->myArray();
 
         tbody.insertAdjacentHTML('afterbegin', html)
 
-
+        // my event target 
         document.getElementById("listClass").addEventListener("change", evt => 
         {
             let select = evt.target;
