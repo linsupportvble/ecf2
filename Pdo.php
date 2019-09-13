@@ -1,4 +1,4 @@
-<?
+<?php
 $host = 'localhost';
 $db   = 'ECF2';
 $user = 'root';

@@ -1,6 +1,10 @@
-<?
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors','On');
+
 // je récupère mon Pdo
-require_once 'Pdo.php';
+require_once ('Pdo.php');
 
 class  ForTheUser
 {
@@ -17,9 +21,19 @@ class  ForTheUser
 
     // }
     public function myArray(){
-        $sql = 'SELECT * FROM Utilisateur WHERE *';
-        $prp = $this->pdo-prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        $prpE = $prp->excute();
-        echo $prpE;
+        try {
+            $sql = 'SELECT * FROM Utilisateur';
+            $stmt = $this->pdo->prepare($sql);
+            $aReussiAExecuter = $stmt->execute();
+            $prpFetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $prpFetch;
+        }
+        catch (PDOException $e) {
+            print $e->getMessage();
+        }
     }
 }
+
+
+    
+  
